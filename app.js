@@ -1,12 +1,14 @@
 const express=require('express')
 const app=express()
 require('dotenv').config()
-const port = process.env.PORT
+const port = process.env.PORT || 3000
+const cors=require('cors')
 
 //Importer la connexion mongoDB
 require('./db')
 
 //Mettre en place le Middleware pour parson le json
+app.use(cors())
 app.use(express.json())
 
 //Intégrer les routes

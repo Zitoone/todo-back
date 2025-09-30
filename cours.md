@@ -28,3 +28,8 @@ Créer ensuite le modèle de données
 --- Voir les exemples ---
 
 Maintenant Node peut utiliser TypeScript nativement
+
+
+**Configurer les CORS** (partage de ressources entre les différents élèments)
+const cors=require('cors') dans app.js
+installer `npm i cors`
