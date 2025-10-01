@@ -6,7 +6,7 @@
 ## 📝 Description
 
 **Todo list** est une application web simple permettant à un utilisateur de consulter sa todo list, ajouter ou supprimer des todos.
-Ce projet est couplé avec son front-end disponible sur `https://github.com/Zitoone/todo-front`
+Ce projet est couplé avec son front-end disponible sur [todo-back](https://github.com/Zitoone/todo-front)
 
 
 ## 📂 Structure du projet
@@ -20,11 +20,11 @@ App.jsx             # Point d’entrée de l’application React
 
 ## 💻 Les endpoints
 
-GET         /todo           -- Pour récupérer tous les éléments de liste
-GET         /todo/:id       -- Récupérer un élèment de liste en particulier
-POST        /todo           -- Créer un élément de liste
-PATCH       /todo/:id       -- Modifier un élèment de liste pour le passer à !iscompleted
-DELETE      /todo/:id       -- Supprimer un élèment de liste
+* GET         /todo → Pour récupérer tous les éléments de liste
+* GET         /todo/:id → Récupérer un élèment de liste en particulier
+* POST        /todo → Créer un élément de liste
+* PATCH       /todo/:id → Modifier un élèment de liste pour le passer à !iscompleted
+* DELETE      /todo/:id → Supprimer un élèment de liste
 
 ## 🔖 Schema de données (modèle)
 - ID: Identifiant unique de l'élèment de liste (String)
@@ -40,25 +40,23 @@ DELETE      /todo/:id       -- Supprimer un élèment de liste
 - Node.js (version 24 ou supérieure)
 - Compte MongoDB
 
-### 1. Cloner le repo
+#### 1. Cloner le repo
 
 ```bash
 git clone https://github.com/Zitoone/todo-back
 ```
-### 2. Installer les dépendances
+
+#### 2. Installer les dépendances
 
 ```bash
 npm install
 ```
 
-### 3. Configuration des variables d'environnement avec la connexion à MongoDB
+#### 3. Liaison avec MongoDB
 
-```bash
-npm i dotenv
-npm i mongoose
-```
+- Créer un compte sur MongoDB si besoin, et obtenez le lien de connexion à votre cluster via _Drivers_
 
-Créer un fichier `.env` à la racine :
+- Créer un fichier `.env` à la racine :
 
 ```env
 PORT=3000
@@ -69,7 +67,7 @@ MONGO_URI=mongodb+srv://username:password@dbname.mongodb.net/?retryWrites=true&w
 
 #### 4. Lancer le back
 
-En local : `nodemon app.js`
+En local : `node app.js`
 Lancez le serveur sur [http://localhost:3000]
 
 
@@ -85,23 +83,17 @@ Lancez le serveur sur [http://localhost:3000]
 
 ## 🚀 Déploiement
 
-**Important** Déployer le back-end d'abord!
+**Important** Déployer le back-end d'abord !
 
 ### Etapes
 
-1. Commencez par modifier le package.json, dans la partie Script:
-```json
-{
-"start": "node app.js" 
-}
-```
-2. Déploiement avec [Render](https://render.com):
+1. Déploiement avec [Render](https://render.com):
 - Se connecter et lier le compte avec votre repository Github
-    * Sur Render : New web service → Public Git Repository → Mettre le lien Github du back du projet → Configurer selon votre le projet (Language: Node, branch: Main, Your region, Start Command: yarn start)
-    * Dans la partie Environment Variables, ajouter vos variables (PORT, MONGO_URI) que vous avez indiquer dans le fichier .env
+    * Sur Render : New web service → Public Git Repository → Mettre le lien Github du back du projet → Configurer selon votre le projet (Language: Node, branch: Main, Your region, Start Command: npm start)
+    * Dans la partie Environment Variables, ajouter vos variables (PORT, MONGO_URI) que vous avez indiqué dans le fichier .env
     * Deploy Web Service
 
-_Les variables d'environnement peuvent être renseignées également une fois le déploiement effectué via le **dashboard** de l'application sur Vercel, dans la section **Settings**, puis **Environnement Variables**_
+_Les variables d'environnement peuvent être renseignées également une fois le déploiement effectué via le **dashboard** de l'application sur Render, dans la section **Settings**, puis **Environnement Variables**_
 
 3. Configurer MongoDB pour autoriser l'accès à la base de données:
 * Sur le dashboard de la base de données, aller sur _Network Access_
