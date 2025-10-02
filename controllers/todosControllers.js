@@ -1,11 +1,10 @@
-
-
 // On va récupérer les données de la bdd
-const Todo=require('../models/todosModels')
+/* const Todo=require('../models/todosModels') */
+const db = require('../db')
 
 exports.getAllTodos=async(req,res)=>{
     try {
-        const todos= await Todo.find()
+        const todos= await db.many('SELECT * FROM todos')
         res.status(200).json(todos)       
     } catch (error) {
         res.status(500).json({error: error.message})
@@ -14,7 +13,7 @@ exports.getAllTodos=async(req,res)=>{
 
 exports.getOneTodo=async(req,res)=>{
     try {        
-        const todo=await Todo.findById(req.params.id)
+        const todo=await db.oneO('SELECT * FROM todos WHERE id_todo= $1', req.params.id)
         if(todo==null){
             res.status(404).json({message:"Not found"})
         }
@@ -27,10 +26,9 @@ exports.getOneTodo=async(req,res)=>{
 exports.createTodo=async(req,res)=>{
     try {
         const {title} =req.body
-        const todo= new Todo({title})
-        await todo.save(
+        const date = new Date()
+        const todo= await db.one('INSERT INTO todos (title_todo, "creationDate_todo") VALUES ($1, $2) RETURNING *', [title, date])
         res.status(201).json({todo})
-        )
     } catch (error) {
         res.status(500).json({error: error.message})
     }
@@ -40,15 +38,17 @@ exports.updateTodo=async(req,res)=>{
     try {
         const {id}=req.params
         // On récupère la tâche existante
-        const todo=await Todo.findById(id)
+        const todo=await db.oneOrNone('SELECT * FROM todos WHERE id_todo=$1', id)
         if(!todo){
             res.status(404).json({message:"Not found"})
         }
         //On inverse l'état actuel
-        todo.isCompleted= !todo.isCompleted
-        todo.completedDate=todo.isCompleted ? new Date() : null
-        await todo.save()
-        res.status(200).json(todo)
+        const isCompleted= !todo.isCompleted_todo
+        const completedDate=isCompleted ? new Date() : null
+        
+        const updateTodo = await db.one(`UPDATE todos SET "isCompleted_todo" = $1, "completedDate_todo" = $2 WHERE id_todo = $3 RETURNING *`, [isCompleted, completedDate, id])
+       
+        res.status(200).json(updateTodo)
     } catch (error) {
         res.status(500).json({error: error.message})
     }
@@ -56,11 +56,11 @@ exports.updateTodo=async(req,res)=>{
 
 exports.deleteTodo=async(req,res)=>{
     try {
-        const todo=await Todo.findById(req.params.id)
-        if(todo == null){
+        const {id} = req.params
+        const todo=await db.result('DELETE FROM todos WHERE id_todo = $1', id)
+        if(todo.rowCount === 0){
             res.status(404).json({message:"Not found"})
         }
-        await todo.deleteOne()
         res.status(200).json({message: "Element deleted"})
     } catch (error) {
         res.status(500).json({error: error.message})

@@ -3,6 +3,7 @@
 ![Node.js](https://img.shields.io/badge/Node.js-purple) ![Express](https://img.shields.io/badge/Express-lightblue
 ) ![MongoDB](https://img.shields.io/badge/MongoDB-green)
 
+
 ## 📝 Description
 
 **Todo list** est une application web simple permettant à un utilisateur de consulter sa todo list, ajouter ou supprimer des todos.
@@ -26,12 +27,16 @@ App.jsx             # Point d’entrée de l’application React
 * PATCH       /todo/:id → Modifier un élèment de liste pour le passer à !iscompleted
 * DELETE      /todo/:id → Supprimer un élèment de liste
 
-## 🔖 Schema de données (modèle)
-- ID: Identifiant unique de l'élèment de liste (String)
-- title: Contenu textuel de l'élèment de liste (String, require)
-- isCompleted: Est-ce que l'élèment est complété (Boolean, require)
-- creationDate: Quand l'élèment de liste a été créee (Date, require)
-- completedDate: Quand l'élèment à été marqué comme validé (Date)
+## 🔖 Schema de données
+```sql
+CREATE TABLE "todos" (
+  "id_todo" integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "todos_id_todo_seq"),
+  "title_todo" varchar(255) NOT NULL,
+  "isCompleted_todo" boolean DEFAULT false,
+  "creationDate_todo" timestamp,
+  "completedDate_todo" timestamp
+);
+```
 
 ## ⚙️ Installation
 

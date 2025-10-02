@@ -20,3 +20,17 @@ const todoSchema=new mongoose.Schema({
 
 //Pour pouvoir utiliser notre schema de données, on doit l'exporter
 module.exports=mongoose.model('Todo', todoSchema)
+
+
+//table todos
+    //title_todo:
+        //varchar(255)
+        //not null
+    //isCompleted_todo:
+        //boolean
+        // default: false
+    //creationDate_todo:
+        // datetime / timestamp
+        // default ?
+    // completedDate_todo:
+        // datetime
